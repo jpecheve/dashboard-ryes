@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RYES Ortodoncia · Dashboard de Transformación Digital — Método GIA</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root{
+  --ink:#13302B;        /* verde pino casi negro */
+  --teal:#0E5C54;       /* primario clínico */
+  --teal-2:#127A6E;
+  --mint:#5FB8A6;       /* acento suave / "después" */
+  --mint-soft:#D7EBE5;
+  --coral:#E2663F;      /* acento cálido / "antes" / alerta */
+  --coral-soft:#F7DDD2;
+  --amber:#E0A21B;      /* riesgo alto */
+  --bg:#E9EEEC;
+  --surface:#FFFFFF;
+  --surface-2:#F4F7F5;
+  --line:#CFD8D4;
+  --line-soft:#E2E8E5;
+  --muted:#5D6B66;
+  --display:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --body:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- HEADER ---------- */
+header{
+  position:sticky;top:0;z-index:50;
+  background:var(--ink);
+  color:#EAF2EF;
+  border-bottom:1px solid #0a211d;
+}
+.head-top{
+  max-width:1180px;margin:0 auto;
+  padding:18px 28px 0;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:24px;
+  flex-wrap:wrap;
+}
+.brand .eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--mint);margin-bottom:6px;
+}
+.brand h1{
+  font-family:var(--display);font-weight:700;font-size:clamp(22px,3vw,30px);
+  letter-spacing:-.02em;line-height:1.05;color:#fff;
+}
+.brand h1 span{color:var(--mint)}
+.brand .sub{font-size:13px;color:#9FB6AF;margin-top:6px;max-width:520px}
+.meta{
+  font-family:var(--mono);font-size:11px;color:#8AA39C;text-align:right;
+  line-height:1.7;letter-spacing:.04em;
+}
+.meta b{color:#D8E6E1;font-weight:500}
+
+nav{
+  max-width:1180px;margin:0 auto;
+  padding:14px 28px 0;
+  display:flex;gap:4px;flex-wrap:wrap;
+}
+nav button{
+  font-family:var(--mono);font-size:12px;letter-spacing:.05em;
+  background:transparent;border:none;color:#9FB6AF;cursor:pointer;
+  padding:10px 16px;border-radius:8px 8px 0 0;
+  border-bottom:2px solid transparent;transition:all .18s ease;
+  text-transform:uppercase;
+}
+nav button:hover{color:#EAF2EF;background:rgba(255,255,255,.04)}
+nav button.active{color:#fff;border-bottom-color:var(--mint);background:rgba(95,184,166,.1)}
+nav button .n{color:var(--mint);margin-right:7px;opacity:.85}
+nav button:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+
+/* ---------- LAYOUT ---------- */
+main{max-width:1180px;margin:0 auto;padding:34px 28px 80px}
+.panel{display:none;animation:fade .35s ease}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.section-head{margin-bottom:22px}
+.section-head .eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:8px;display:flex;align-items:center;gap:10px;
+}
+.section-head .eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
+.section-head h2{
+  font-family:var(--display);font-weight:600;font-size:clamp(20px,2.6vw,27px);
+  letter-spacing:-.02em;line-height:1.15;
+}
+.section-head p{color:var(--muted);font-size:14px;margin-top:8px;max-width:680px}
+
+.card{
+  background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;
+  padding:22px;
+}
+
+/* ---------- RESUMEN / KPIs ---------- */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:26px}
+.kpi{
+  background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;
+  padding:20px 20px 18px;position:relative;overflow:hidden;
+}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--teal)}
+.kpi.accent::before{background:var(--coral)}
+.kpi.mint::before{background:var(--mint)}
+.kpi .label{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.kpi .value{font-family:var(--display);font-weight:700;font-size:30px;line-height:1;letter-spacing:-.02em}
+.kpi .value .u{font-size:14px;color:var(--muted);font-weight:500;margin-left:4px}
+.kpi .foot{font-size:12px;color:var(--muted);margin-top:8px}
+.kpi .foot b{color:var(--teal);font-weight:600}
+.kpi.accent .foot b{color:var(--coral)}
+
+.reco{
+  background:linear-gradient(135deg,var(--ink),var(--teal));
+  color:#EAF2EF;border-radius:16px;padding:28px;margin-bottom:8px;position:relative;overflow:hidden;
+}
+.reco::after{
+  content:"GIA";position:absolute;right:-10px;bottom:-26px;
+  font-family:var(--display);font-weight:700;font-size:140px;color:rgba(255,255,255,.05);
+  letter-spacing:-.04em;pointer-events:none;
+}
+.reco .tag{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mint);margin-bottom:12px}
+.reco h3{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:-.01em;margin-bottom:14px;max-width:640px;position:relative}
+.reco .stack{display:flex;gap:10px;flex-wrap:wrap;position:relative}
+.reco .chip{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);
+  border-radius:999px;padding:7px 14px;font-size:13px;font-family:var(--mono);
+}
+.reco .chip b{color:#fff}
+
+/* ---------- DIAGNÓSTICO ---------- */
+.toggle-wrap{display:flex;align-items:center;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.toggle{
+  display:inline-flex;background:var(--surface);border:1px solid var(--line);
+  border-radius:999px;padding:4px;position:relative;
+}
+.toggle button{
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  border:none;background:transparent;cursor:pointer;color:var(--muted);
+  padding:8px 20px;border-radius:999px;transition:color .25s;z-index:1;position:relative;
+}
+.toggle button.on{color:#fff}
+.toggle .slider{
+  position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);
+  background:var(--coral);border-radius:999px;transition:transform .3s cubic-bezier(.4,0,.2,1),background .3s;
+}
+.toggle.after .slider{transform:translateX(100%);background:var(--teal)}
+.toggle-hint{font-size:13px;color:var(--muted)}
+.toggle-hint b{color:var(--ink)}
+
+.diag-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.diag{
+  border:1px solid var(--line-soft);border-radius:14px;padding:20px;background:var(--surface);
+  transition:border-color .3s,background .3s,box-shadow .3s;position:relative;
+}
+.diag .axis{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.diag .state{font-size:14.5px;line-height:1.5;transition:opacity .25s}
+.diag .badge{
+  display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 9px;border-radius:6px;margin-bottom:10px;
+}
+/* estado ANTES */
+.diag[data-on="before"]{background:#FCEFE9;border-color:var(--coral-soft)}
+.diag[data-on="before"] .badge{background:var(--coral-soft);color:#9c3b1c}
+.diag[data-on="before"]::before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:3px;background:var(--coral);border-radius:0 3px 3px 0}
+/* estado DESPUÉS */
+.diag[data-on="after"]{background:#EBF5F1;border-color:var(--mint-soft)}
+.diag[data-on="after"] .badge{background:var(--mint-soft);color:#0a4a43}
+.diag[data-on="after"]::before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:3px;background:var(--teal);border-radius:0 3px 3px 0}
+
+/* ---------- SOLUCIÓN ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:26px}
+@media(max-width:760px){.split{grid-template-columns:1fr}}
+.vs-card h4{font-family:var(--display);font-weight:600;font-size:15px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.vs-card.win{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal)}
+.vs-card .win-tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;background:var(--teal);color:#fff;padding:3px 8px;border-radius:5px;text-transform:uppercase}
+.vs-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px dashed var(--line-soft);font-size:13.5px}
+.vs-row:last-child{border-bottom:none}
+.vs-row .v{font-family:var(--mono);font-weight:500}
+.vs-total{font-family:var(--display);font-weight:700;font-size:20px}
+.vs-card.win .vs-total{color:var(--teal)}
+
+.lic-bars{display:flex;flex-direction:column;gap:14px;margin-top:6px}
+.lic-row{display:grid;grid-template-columns:140px 1fr auto;gap:14px;align-items:center;font-size:13px}
+.lic-row .name{font-weight:500}
+.lic-row .name small{display:block;color:var(--muted);font-family:var(--mono);font-size:10.5px;font-weight:400}
+.lic-track{height:26px;background:var(--surface-2);border-radius:7px;overflow:hidden;position:relative}
+.lic-fill{height:100%;border-radius:7px;width:0;transition:width 1s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;padding-left:10px}
+.lic-fill span{font-family:var(--mono);font-size:11px;color:#fff;font-weight:500}
+.lic-row .cost{font-family:var(--mono);font-size:12.5px;color:var(--muted);white-space:nowrap}
+
+/* selector de perfil */
+.profile-pick{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.profile-pick button{
+  font-family:var(--body);font-size:12.5px;font-weight:500;cursor:pointer;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  padding:8px 13px;border-radius:9px;transition:all .15s;
+}
+.profile-pick button:hover{border-color:var(--teal);color:var(--teal)}
+.profile-pick button.sel{background:var(--ink);color:#fff;border-color:var(--ink)}
+.profile-pick button .cnt{font-family:var(--mono);font-size:10px;opacity:.7;margin-left:5px}
+
+.profile-card{background:var(--surface-2);border:1px solid var(--line-soft);border-radius:14px;padding:22px;min-height:200px}
+.profile-card .pc-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.profile-card .pc-head h4{font-family:var(--display);font-weight:600;font-size:18px}
+.profile-card .pc-head .pcnt{font-family:var(--mono);font-size:12px;color:var(--teal);background:var(--mint-soft);padding:5px 11px;border-radius:8px}
+.pc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.pc-cell .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.pc-cell .val{font-size:13.5px;font-weight:500}
+.pc-cell.restr{grid-column:1/-1}
+.pc-cell.restr .val{color:#9c3b1c;font-weight:400;font-size:13px}
+
+/* agente IA flow */
+.flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin-top:6px}
+.flow-node{
+  flex:1;min-width:120px;background:var(--surface-2);border:1px solid var(--line-soft);
+  border-radius:11px;padding:14px;text-align:center;position:relative;
+}
+.flow-node .ico{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--teal);text-transform:uppercase;margin-bottom:6px}
+.flow-node .t{font-weight:600;font-size:13.5px}
+.flow-node .d{font-size:11.5px;color:var(--muted);margin-top:4px}
+.flow-arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--mint);font-weight:700;font-size:18px}
+@media(max-width:680px){.flow-arrow{transform:rotate(90deg);padding:6px 0;width:100%}.flow-node{min-width:100%}}
+
+.dim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:6px}
+.dim{border:1px solid var(--line-soft);border-radius:12px;padding:16px;background:var(--surface)}
+.dim .q{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin-bottom:4px}
+.dim .a{font-family:var(--display);font-weight:600;font-size:15px;margin-bottom:8px}
+.dim .desc{font-size:12.5px;color:var(--muted);line-height:1.5}
+
+/* ---------- ROADMAP ---------- */
+.timeline{position:relative;padding-left:6px}
+.phase{
+  border-left:2px solid var(--line);padding:0 0 6px 26px;position:relative;margin-bottom:4px;
+}
+.phase:last-child{border-left-color:transparent}
+.phase .dot{
+  position:absolute;left:-9px;top:4px;width:16px;height:16px;border-radius:50%;
+  background:var(--surface);border:3px solid var(--teal);
+}
+.phase.done .dot{background:var(--teal)}
+.phase-head{
+  cursor:pointer;display:flex;align-items:baseline;gap:14px;padding:6px 0;
+  user-select:none;
+}
+.phase-head .ph-n{font-family:var(--mono);font-size:11px;color:var(--teal);font-weight:700;letter-spacing:.05em}
+.phase-head .ph-title{font-family:var(--display);font-weight:600;font-size:16px;flex:1}
+.phase-head .ph-when{font-family:var(--mono);font-size:11.5px;color:var(--muted);white-space:nowrap}
+.phase-head .chev{color:var(--muted);transition:transform .25s;font-size:13px}
+.phase.open .chev{transform:rotate(90deg)}
+.phase-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.phase.open .phase-body{max-height:320px}
+.phase-body ul{list-style:none;padding:6px 0 14px}
+.phase-body li{font-size:13.5px;color:#3a4a45;padding:5px 0 5px 20px;position:relative}
+.phase-body li::before{content:"›";position:absolute;left:4px;color:var(--mint);font-weight:700}
+
+/* ---------- IMPACTO ---------- */
+.imp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:26px}
+@media(max-width:760px){.imp-grid{grid-template-columns:1fr}}
+.chart-title{font-family:var(--display);font-weight:600;font-size:15px;margin-bottom:4px}
+.chart-sub{font-size:12px;color:var(--muted);margin-bottom:18px}
+
+/* barras comparativas costo */
+.bar2{display:flex;flex-direction:column;gap:16px}
+.bar2-row .bl{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;font-weight:500}
+.bar2-row .bl .amt{font-family:var(--mono)}
+.bar2-track{height:30px;background:var(--surface-2);border-radius:8px;overflow:hidden}
+.bar2-fill{height:100%;width:0;border-radius:8px;transition:width 1.1s cubic-bezier(.4,0,.2,1)}
+
+/* dona empleados */
+.donut-wrap{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.donut{flex-shrink:0}
+.legend{display:flex;flex-direction:column;gap:8px;font-size:12.5px;flex:1;min-width:160px}
+.legend .li{display:flex;align-items:center;gap:9px}
+.legend .sw{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+.legend .nm{flex:1}
+.legend .vl{font-family:var(--mono);color:var(--muted)}
+
+.recep-stat{text-align:center;padding:10px 0}
+.recep-stat .big{font-family:var(--display);font-weight:700;font-size:54px;color:var(--teal);line-height:1;letter-spacing:-.03em}
+.recep-stat .big .pct{font-size:28px;color:var(--mint)}
+.recep-stat .cap{font-size:13px;color:var(--muted);margin-top:8px}
+.recep-bar{height:10px;border-radius:6px;background:var(--surface-2);margin:18px 0 4px;overflow:hidden;position:relative}
+.recep-bar .seg{position:absolute;height:100%;background:linear-gradient(90deg,var(--mint),var(--teal));left:0;width:0;transition:width 1.2s ease;border-radius:6px}
+
+.benefit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.benefit{border:1px solid var(--line-soft);border-radius:12px;padding:16px;background:var(--surface)}
+.benefit .bt{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:7px}
+.benefit .bd{font-size:13px;color:#3a4a45;line-height:1.5}
+
+.risk-list{display:flex;flex-direction:column;gap:8px}
+.risk{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:13px 16px;background:var(--surface);border:1px solid var(--line-soft);border-radius:11px}
+.risk .rt{font-size:13.5px;font-weight:500}
+.risk .rm{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.4}
+.prob{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:7px;white-space:nowrap;font-weight:500}
+.prob.alta{background:var(--coral-soft);color:#9c3b1c}
+.prob.media{background:#FBEEC9;color:#8a6410}
+.prob.baja{background:var(--mint-soft);color:#0a4a43}
+
+footer{max-width:1180px;margin:0 auto;padding:22px 28px 50px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+
+.note{font-size:12px;color:var(--muted);font-style:italic;margin-top:14px;padding-left:14px;border-left:2px solid var(--amber)}
+.block-gap{margin-top:26px}
+h3.sub{font-family:var(--display);font-weight:600;font-size:17px;margin-bottom:14px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-top">
+    <div class="brand">
+      <div class="eyebrow">Método GIA · Gobierno de la Información y Aplicaciones</div>
+      <h1>RYES Ortodoncia <span>·</span> Transformación digital con IA</h1>
+      <div class="sub">De una empresa sin políticas ofimáticas a una operación multi-sede gobernada por datos, segura y escalable.</div>
+    </div>
+    <div class="meta">
+      <b>UBA · Cs. Económicas</b><br>
+      Consultora Digital GIA<br>
+      200 empleados · 3 sedes<br>
+      Mayo 2026
+    </div>
+  </div>
+  <nav id="nav">
+    <button class="active" data-tab="resumen"><span class="n">00</span>Resumen</button>
+    <button data-tab="diagnostico"><span class="n">01</span>Diagnóstico</button>
+    <button data-tab="solucion"><span class="n">02</span>Solución</button>
+    <button data-tab="roadmap"><span class="n">03</span>Implementación</button>
+    <button data-tab="impacto"><span class="n">04</span>Impacto</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ RESUMEN ============ -->
+<section class="panel active" id="resumen">
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Dotación</div>
+      <div class="value">200<span class="u">empleados</span></div>
+      <div class="foot">Distribuidos en <b>3 sedes</b> del GBA</div>
+    </div>
+    <div class="kpi mint">
+      <div class="label">Suite ofimática · anual</div>
+      <div class="value">28.944<span class="u">USD</span></div>
+      <div class="foot">Microsoft 365 Business</div>
+    </div>
+    <div class="kpi accent">
+      <div class="label">Ahorro vs Google Workspace</div>
+      <div class="value">2.796<span class="u">USD/año</span></div>
+      <div class="foot accent">Mejor seguridad, <b>menor costo</b></div>
+    </div>
+    <div class="kpi">
+      <div class="label">Agente IA de turnos</div>
+      <div class="value">~33<span class="u">USD/mes</span></div>
+      <div class="foot">n8n + Claude API + WhatsApp</div>
+    </div>
+    <div class="kpi mint">
+      <div class="label">Carga de recepción</div>
+      <div class="value">40–60<span class="u">% menos</span></div>
+      <div class="foot">Consultas resueltas por el agente</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Cumplimiento</div>
+      <div class="value">25.326<span class="u">Ley</span></div>
+      <div class="foot">Datos de salud protegidos <b>desde el día 1</b></div>
+    </div>
+  </div>
+
+  <div class="reco">
+    <div class="tag">Recomendación a Dirección</div>
+    <h3>Adoptar Microsoft 365 Business + agente de turnos en n8n con Claude API, asignando licencias por perfil según sensibilidad del dato.</h3>
+    <div class="stack">
+      <div class="chip">Premium <b>· 27</b></div>
+      <div class="chip">Standard <b>· 120</b></div>
+      <div class="chip">Basic <b>· 53</b></div>
+      <div class="chip">Sin licencia <b>· 30</b></div>
+      <div class="chip">Agente IA <b>· WhatsApp 24/7</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIAGNÓSTICO ============ -->
+<section class="panel" id="diagnostico">
+  <div class="section-head">
+    <div class="eyebrow">Situación inicial relevada</div>
+    <h2>El antes y el después de RYES</h2>
+    <p>La organización arranca sin ninguna política tecnológica formal. Movés el interruptor para comparar cada eje crítico en su estado actual contra la propuesta GIA.</p>
+  </div>
+
+  <div class="toggle-wrap">
+    <div class="toggle" id="diagToggle">
+      <span class="slider"></span>
+      <button class="on" data-state="before">Antes</button>
+      <button data-state="after">Después</button>
+    </div>
+    <div class="toggle-hint">Mostrando: <b id="stateLabel">situación actual sin políticas</b></div>
+  </div>
+
+  <div class="diag-grid" id="diagGrid"></div>
+</section>
+
+<!-- ============ SOLUCIÓN ============ -->
+<section class="panel" id="solucion">
+  <div class="section-head">
+    <div class="eyebrow">Decisión de plataforma</div>
+    <h2>Por qué Microsoft 365</h2>
+    <p>Misma lógica de perfiles aplicada a las dos suites líderes. Microsoft gana por el factor de mayor peso para RYES: seguridad sobre datos de salud, a menor costo total.</p>
+  </div>
+
+  <div class="split">
+    <div class="card vs-card win">
+      <h4>Microsoft 365 <span class="win-tag">Elegido</span></h4>
+      <div class="vs-row"><span>Perfil alto · 27 (Premium)</span><span class="v">USD 7.128</span></div>
+      <div class="vs-row"><span>Perfil medio · 120 (Standard)</span><span class="v">USD 18.000</span></div>
+      <div class="vs-row"><span>Perfil básico · 53 (Basic)</span><span class="v">USD 3.816</span></div>
+      <div class="vs-row"><span><b>Total anual</b></span><span class="vs-total">USD 28.944</span></div>
+      <div class="vs-row" style="border-top:1px solid var(--line-soft);margin-top:6px;padding-top:12px"><span>Ventaja</span><span class="v" style="color:var(--teal)">Defender + Intune + Entra ID P1</span></div>
+    </div>
+    <div class="card vs-card">
+      <h4>Google Workspace</h4>
+      <div class="vs-row"><span>Perfil alto · 27 (Plus)</span><span class="v">USD 7.128</span></div>
+      <div class="vs-row"><span>Perfil medio · 120 (Standard)</span><span class="v">USD 20.160</span></div>
+      <div class="vs-row"><span>Perfil básico · 53 (Starter)</span><span class="v">USD 4.452</span></div>
+      <div class="vs-row"><span><b>Total anual</b></span><span class="vs-total">USD 31.740</span></div>
+      <div class="vs-row" style="border-top:1px solid var(--line-soft);margin-top:6px;padding-top:12px"><span>Ventaja</span><span class="v">Gemini incluido · colaboración nativa</span></div>
+    </div>
+  </div>
+
+  <div class="card block-gap">
+    <h3 class="sub">Distribución de las 170 licencias</h3>
+    <div class="lic-bars" id="licBars"></div>
+  </div>
+
+  <div class="block-gap">
+    <h3 class="sub">Asignación por perfil — ficha operativa</h3>
+    <div class="profile-pick" id="profilePick"></div>
+    <div class="profile-card" id="profileCard"></div>
+  </div>
+
+  <div class="card block-gap">
+    <h3 class="sub">Agente de turnos · arquitectura</h3>
+    <div class="flow">
+      <div class="flow-node"><div class="ico">Canal</div><div class="t">WhatsApp</div><div class="d">Business Cloud API</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="ico">Orquestación</div><div class="t">n8n Cloud</div><div class="d">Workflow + memoria</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="ico">Cerebro</div><div class="t">Claude API</div><div class="d">Haiku 4.5 · intención</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="ico">Acción</div><div class="t">Calendar</div><div class="d">Graph API · sin choques</div></div>
+    </div>
+    <div class="note">El agente solo gestiona nombre, teléfono, sede y horario. La historia clínica nunca circula por este flujo (Ley 25.326). Costo en producción: ~USD 28–33/mes.</div>
+  </div>
+
+  <div class="block-gap">
+    <h3 class="sub">Gobernanza del agente · marco AIBPS</h3>
+    <div class="dim-grid">
+      <div class="dim"><div class="q">Proceso</div><div class="a">Ágil</div><div class="desc">Sumar una sede es agregar un parámetro. El flujo se actualiza sin tocar producción.</div></div>
+      <div class="dim"><div class="q">Tecnología</div><div class="a">Fluido</div><div class="desc">Escalado a recepción humana instantáneo. El agente avisa cuando cede el control.</div></div>
+      <div class="dim"><div class="q">Datos</div><div class="a">Protegido</div><div class="desc">Solo datos de contacto. Sin información clínica. Logs auditables por IT.</div></div>
+      <div class="dim"><div class="q">Humana / Control</div><div class="a">Gobernable</div><div class="desc">IT audita a diario. Coordinadores pueden intervenir cualquier conversación.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROADMAP ============ -->
+<section class="panel" id="roadmap">
+  <div class="section-head">
+    <div class="eyebrow">Hoja de ruta · 12 semanas + optimización</div>
+    <h2>Implementación por fases</h2>
+    <p>Tocá cada fase para ver las actividades clave. El orden importa: contratar M365 antes de julio 2026 fija el precio actual y ahorra ~USD 4.452 el primer año.</p>
+  </div>
+  <div class="timeline" id="timeline"></div>
+</section>
+
+<!-- ============ IMPACTO ============ -->
+<section class="panel" id="impacto">
+  <div class="section-head">
+    <div class="eyebrow">Números de la propuesta</div>
+    <h2>Impacto económico y operativo</h2>
+    <p>Los costos se separan en lo que se paga todos los años y la inversión que se hace una sola vez.</p>
+  </div>
+
+  <div class="imp-grid">
+    <div class="card">
+      <div class="chart-title">Costo anual de la suite</div>
+      <div class="chart-sub">Misma distribución de perfiles · USD/año</div>
+      <div class="bar2" id="costBars"></div>
+    </div>
+    <div class="card">
+      <div class="chart-title">Dotación por área</div>
+      <div class="chart-sub">200 empleados · 9 áreas funcionales</div>
+      <div class="donut-wrap">
+        <svg class="donut" id="donut" width="160" height="160" viewBox="0 0 160 160"></svg>
+        <div class="legend" id="donutLegend"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="imp-grid">
+    <div class="card">
+      <div class="chart-title">Descarga del personal de recepción</div>
+      <div class="chart-sub">Consultas entrantes resueltas por el agente, sin intervención humana</div>
+      <div class="recep-stat">
+        <div class="big">40<span class="pct">–</span>60<span class="pct">%</span></div>
+        <div class="recep-bar"><div class="seg" id="recepSeg"></div></div>
+        <div class="cap">El agente atiende y agenda turnos las 24 horas vía WhatsApp.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="chart-title">Estructura de costos · primer año</div>
+      <div class="chart-sub">Recurrente anual vs inversión única</div>
+      <div class="bar2" id="costStruct"></div>
+      <div class="note">El hardware (~USD 180.000) es una inversión única con vida útil de 4–5 años, no un gasto que se repite. El costo recurrente real es ~USD 29.340/año (suite + agente).</div>
+    </div>
+  </div>
+
+  <h3 class="sub block-gap">Beneficios esperados</h3>
+  <div class="benefit-grid">
+    <div class="benefit"><div class="bt">Operativo</div><div class="bd">Fin de los canales informales. Coordinación unificada entre las tres sedes desde el primer día.</div></div>
+    <div class="benefit"><div class="bt">Paciente</div><div class="bd">Turnos por WhatsApp las 24 horas. Menos espera, menos llamados perdidos.</div></div>
+    <div class="benefit"><div class="bt">Seguridad</div><div class="bd">DLP + MFA + cumplimiento de la Ley 25.326. Sin fugas de datos de pacientes.</div></div>
+    <div class="benefit"><div class="bt">Escalabilidad</div><div class="bd">Al abrir sedes en 2027, se replica el modelo: solo se suman licencias y equipos.</div></div>
+    <div class="benefit"><div class="bt">Gobierno</div><div class="bd">IT controla usuarios, dispositivos y uso de IA desde el Admin Center, con auditoría completa.</div></div>
+    <div class="benefit"><div class="bt">Económico</div><div class="bd">La opción más eficiente: ahorro frente a Google y agente de IA por menos del 1,4% del costo anual.</div></div>
+  </div>
+
+  <h3 class="sub block-gap">Riesgos principales y mitigación</h3>
+  <div class="risk-list" id="riskList"></div>
+</section>
+
+</main>
+
+<footer>
+  <span>RYES Ortodoncia S.R.L. · Propuesta Método GIA</span>
+  <span>Dashboard interactivo · TP Inteligencia Artificial · 2026</span>
+</footer>
+
+<script>
+/* ---------- NAV TABS ---------- */
+const nav=document.getElementById('nav');
+nav.addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  document.querySelectorAll('#nav button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  const tab=b.dataset.tab;
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===tab));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(tab==='solucion') animateLic();
+  if(tab==='impacto') animateImpact();
+});
+
+/* ---------- DIAGNÓSTICO ---------- */
+const diagData=[
+  {axis:'Comunicación interna',before:'Cuentas personales de Gmail/Hotmail y WhatsApp para todo, sin registro ni control.',after:'Correo corporativo @ryesortodoncia.com.ar + Teams. Canales oficiales y trazables.'},
+  {axis:'Gestión de turnos',before:'WhatsApp personal de recepción, coordinación manual, sin agenda centralizada.',after:'Agente IA en WhatsApp 24/7 que agenda, confirma y cancela sin superposiciones.'},
+  {axis:'Documentos',before:'Archivos sueltos en computadoras locales, sin respaldo ni control de versiones.',after:'SharePoint/OneDrive con versionado, cifrado AES-256 y papelera de 93 días.'},
+  {axis:'Operación multi-sede',before:'Las tres sedes operan aisladas, cada una con sus propios criterios.',after:'Coordinación centralizada de agendas, recursos y comunicación entre sedes.'},
+  {axis:'Datos de pacientes',before:'Sin control de acceso definido. Riesgo legal directo bajo la Ley 25.326.',after:'Mínimo privilegio, DLP, MFA y sistema médico separado. Acceso por rol.'},
+  {axis:'Identidad y accesos',before:'No hay administración de usuarios. Cada quien usa lo que tiene a mano.',after:'Microsoft Entra ID: altas/bajas controladas, roles por perfil, baja en 2 hs.'}
+];
+const diagGrid=document.getElementById('diagGrid');
+function renderDiag(state){
+  diagGrid.innerHTML=diagData.map(d=>`
+    <div class="diag" data-on="${state}">
+      <div class="axis">${d.axis}</div>
+      <span class="badge">${state==='before'?'Hoy · sin políticas':'Propuesta GIA'}</span>
+      <div class="state">${state==='before'?d.before:d.after}</div>
+    </div>`).join('');
+}
+renderDiag('before');
+const diagToggle=document.getElementById('diagToggle');
+const stateLabel=document.getElementById('stateLabel');
+diagToggle.addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  const st=b.dataset.state;
+  diagToggle.classList.toggle('after',st==='after');
+  diagToggle.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+  stateLabel.textContent = st==='before'?'situación actual sin políticas':'propuesta GIA implementada';
+  renderDiag(st);
+});
+
+/* ---------- LICENCIAS ---------- */
+const licData=[
+  {name:'Business Premium',sub:'27 usuarios · datos sensibles',n:27,cost:'USD 7.128',color:'var(--ink)'},
+  {name:'Business Standard',sub:'120 usuarios · profesionales y recepción',n:120,cost:'USD 18.000',color:'var(--teal)'},
+  {name:'Business Basic',sub:'53 usuarios · perfiles operativos',n:53,cost:'USD 3.816',color:'var(--mint)'}
+];
+const licBars=document.getElementById('licBars');
+licBars.innerHTML=licData.map(l=>`
+  <div class="lic-row">
+    <div class="name">${l.name}<small>${l.sub}</small></div>
+    <div class="lic-track"><div class="lic-fill" data-w="${(l.n/120*100).toFixed(0)}" style="background:${l.color}"><span>${l.n}</span></div></div>
+    <div class="cost">${l.cost}</div>
+  </div>`).join('');
+let licAnimated=false;
+function animateLic(){
+  if(licAnimated) return; licAnimated=true;
+  setTimeout(()=>document.querySelectorAll('.lic-fill').forEach(f=>f.style.width=f.dataset.w+'%'),80);
+}
+
+/* ---------- PERFILES ---------- */
+const profiles=[
+  {name:'Dirección General',n:3,plan:'M365 Premium',hw:'Notebook + Smartphone',ia:'Copilot Chat',acc:'Acceso total a las 3 sedes. Dashboards del agente.',restr:'Solo herramientas corporativas para info estratégica.'},
+  {name:'Administración y Finanzas',n:12,plan:'M365 Premium',hw:'PC de escritorio',ia:'Copilot Chat',acc:'Excel, Word, Outlook. Carpetas financieras restringidas.',restr:'Prohibido cargar datos financieros en IA externa. DLP activo.'},
+  {name:'Recursos Humanos',n:6,plan:'M365 Premium',hw:'PC de escritorio',ia:'Copilot Chat',acc:'Legajos en SharePoint. Outlook. Onboarding.',restr:'Solo personal de su sede. Sin datos de pacientes ni financieros.'},
+  {name:'IT / Sistemas',n:6,plan:'M365 Premium',hw:'Notebook + 2ª pantalla + Smartphone',ia:'Claude · Copilot · ChatGPT (pago)',acc:'Admin Center, Entra ID, Intune, n8n, logs del agente, APIs.',restr:'Sin restricción. Gobiernan el uso de IA de toda la organización.'},
+  {name:'Marketing y Redes',n:8,plan:'M365 Standard',hw:'Notebook',ia:'Claude o ChatGPT (gratuito)',acc:'Correo, Teams, carpeta Marketing, herramientas de diseño.',restr:'IA externa con libertad. Sin acceso a datos sensibles.'},
+  {name:'Cuerpo Profesional',n:90,plan:'M365 Standard',hw:'Notebook liviana (<1,5 kg) + BYOD con MDM',ia:'Copilot básico',acc:'Outlook, agenda propia, historial de turnos propios, Teams.',restr:'Prohibido cargar datos de pacientes en IA externa. Borrado remoto vía MDM.'},
+  {name:'Recepción / Turnos',n:30,plan:'M365 Standard',hw:'PC de escritorio + auriculares',ia:'Gemini / Copilot básico',acc:'Panel del agente IA. Agenda de su sede. Outlook, Teams.',restr:'Sin agendas de otras sedes. Sin datos financieros.'},
+  {name:'Logística e Insumos',n:15,plan:'M365 Basic',hw:'PC compartida (1 por sede)',ia:'Sin asignación',acc:'Correo. Teams mensajería. Control de stock (solo lectura).',restr:'Sin datos de pacientes ni financieros.'},
+  {name:'Limpieza y Mantenimiento',n:30,plan:'Sin licencia',hw:'Sin equipo asignado',ia:'Sin acceso',acc:'Grupo de WhatsApp corporativo con coordinadores.',restr:'Sin acceso a sistemas corporativos.'}
+];
+const pick=document.getElementById('profilePick');
+const pcard=document.getElementById('profileCard');
+pick.innerHTML=profiles.map((p,i)=>`<button data-i="${i}" class="${i===0?'sel':''}">${p.name}<span class="cnt">${p.n}</span></button>`).join('');
+function renderProfile(i){
+  const p=profiles[i];
+  pcard.innerHTML=`
+    <div class="pc-head"><h4>${p.name}</h4><span class="pcnt">${p.n} personas</span></div>
+    <div class="pc-grid">
+      <div class="pc-cell"><div class="k">Suite / Plan</div><div class="val">${p.plan}</div></div>
+      <div class="pc-cell"><div class="k">Hardware</div><div class="val">${p.hw}</div></div>
+      <div class="pc-cell"><div class="k">IA asignada</div><div class="val">${p.ia}</div></div>
+      <div class="pc-cell"><div class="k">Accesos</div><div class="val">${p.acc}</div></div>
+      <div class="pc-cell restr"><div class="k">Restricción clave</div><div class="val">${p.restr}</div></div>
+    </div>`;
+}
+renderProfile(0);
+pick.addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  pick.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));
+  b.classList.add('sel');
+  renderProfile(+b.dataset.i);
+});
+
+/* ---------- ROADMAP ---------- */
+const phases=[
+  {n:'Fase 1',title:'Antes del lanzamiento',when:'Semanas 1–2',acts:['Contratar M365 antes de julio 2026 (fija el precio)','Registrar dominio corporativo','Configurar Entra ID y grupos de usuarios','Pedir y configurar el número de WhatsApp Business']},
+  {n:'Fase 2',title:'Infraestructura',when:'Semanas 3–4',acts:['Instalar red en las 3 sedes (routers, APs WiFi 6, UPS)','Entregar y configurar equipos por perfil','Inscribir dispositivos en Intune','Configurar SharePoint, carpetas y permisos']},
+  {n:'Fase 3',title:'Agente IA',when:'Semanas 5–6',acts:['Configurar el workflow en n8n Cloud','Integrar Outlook Calendar vía Graph API','Integrar WhatsApp Business API','Pruebas internas (IT + Recepción) y ajuste de escalados']},
+  {n:'Fase 4',title:'Capacitación',when:'Semana 7',acts:['Capacitación presencial por perfil en cada sede','Manual de uso básico digital','Simulacro del agente con Recepción','Activar MFA para todos los perfiles Premium']},
+  {n:'Fase 5',title:'Lanzamiento y seguimiento',when:'Semanas 8–12',acts:['Inicio de operaciones con suite y agente activos','Operación paralela: agente + recepción manual','Monitoreo de logs, errores y métricas','Inscripción ante la AAIP + firma del DPA con Microsoft']},
+  {n:'Fase 6',title:'Optimización',when:'Mes 4 en adelante',acts:['Revisar métricas del agente (resolución, escalados)','Ajustar políticas de acceso según uso real','Evaluar expansión a nuevas sedes 2027','Revisión anual del marco AIBPS y gobierno de datos']}
+];
+const tl=document.getElementById('timeline');
+tl.innerHTML=phases.map((p,i)=>`
+  <div class="phase ${i===0?'open done':''}">
+    <span class="dot"></span>
+    <div class="phase-head">
+      <span class="ph-n">${p.n}</span>
+      <span class="ph-title">${p.title}</span>
+      <span class="ph-when">${p.when}</span>
+      <span class="chev">›</span>
+    </div>
+    <div class="phase-body"><ul>${p.acts.map(a=>`<li>${a}</li>`).join('')}</ul></div>
+  </div>`).join('');
+tl.addEventListener('click',e=>{
+  const h=e.target.closest('.phase-head'); if(!h) return;
+  h.parentElement.classList.toggle('open');
+});
+
+/* ---------- IMPACTO ---------- */
+const costBars=document.getElementById('costBars');
+costBars.innerHTML=`
+  <div class="bar2-row">
+    <div class="bl"><span>Microsoft 365 · elegido</span><span class="amt">USD 28.944</span></div>
+    <div class="bar2-track"><div class="bar2-fill" data-w="91" style="background:var(--teal)"></div></div>
+  </div>
+  <div class="bar2-row">
+    <div class="bl"><span>Google Workspace</span><span class="amt">USD 31.740</span></div>
+    <div class="bar2-track"><div class="bar2-fill" data-w="100" style="background:var(--coral)"></div></div>
+  </div>`;
+
+const costStruct=document.getElementById('costStruct');
+costStruct.innerHTML=`
+  <div class="bar2-row">
+    <div class="bl"><span>Recurrente anual · suite + agente</span><span class="amt">~USD 29.340</span></div>
+    <div class="bar2-track"><div class="bar2-fill" data-w="16" style="background:var(--mint)"></div></div>
+  </div>
+  <div class="bar2-row">
+    <div class="bl"><span>Inversión única · hardware + red</span><span class="amt">~USD 184.500</span></div>
+    <div class="bar2-track"><div class="bar2-fill" data-w="100" style="background:var(--ink)"></div></div>
+  </div>`;
+
+/* DONA empleados */
+const areas=[
+  {nm:'Cuerpo Profesional',n:90,c:'#0E5C54'},
+  {nm:'Recepción / Turnos',n:30,c:'#127A6E'},
+  {nm:'Limpieza y Mant.',n:30,c:'#5FB8A6'},
+  {nm:'Logística e Insumos',n:15,c:'#8DCFC1'},
+  {nm:'Administración',n:12,c:'#E2663F'},
+  {nm:'Marketing',n:8,c:'#EE9170'},
+  {nm:'RRHH',n:6,c:'#E0A21B'},
+  {nm:'IT / Sistemas',n:6,c:'#13302B'},
+  {nm:'Dirección',n:3,c:'#9FB6AF'}
+];
+const donut=document.getElementById('donut');
+const dl=document.getElementById('donutLegend');
+const total=200, R=62, C=2*Math.PI*R, cx=80, cy=80;
+let offset=0;
+let svg=`<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="var(--surface-2)" stroke-width="22"/>`;
+areas.forEach(a=>{
+  const frac=a.n/total, len=C*frac;
+  svg+=`<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${a.c}" stroke-width="22"
+    stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-offset}"
+    transform="rotate(-90 ${cx} ${cy})"/>`;
+  offset+=len;
+});
+svg+=`<text x="${cx}" y="${cy-3}" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="26" fill="#13302B">200</text>
+      <text x="${cx}" y="${cy+15}" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#5D6B66" letter-spacing="1">EMPLEADOS</text>`;
+donut.innerHTML=svg;
+dl.innerHTML=areas.map(a=>`<div class="li"><span class="sw" style="background:${a.c}"></span><span class="nm">${a.nm}</span><span class="vl">${a.n}</span></div>`).join('');
+
+/* RIESGOS */
+const risks=[
+  {t:'Resistencia al cambio del personal',m:'Capacitación obligatoria + soporte intensivo 30 días.',p:'alta'},
+  {t:'Aumento de precios M365 (julio 2026)',m:'Contratar el plan anual antes de esa fecha. Ahorro ~USD 4.452.',p:'alta'},
+  {t:'Corte de internet en una sede',m:'Módem 4G/5G de backup. El agente sigue operando desde n8n Cloud.',p:'media'},
+  {t:'Fuga de datos por IA externa',m:'Política de IA por perfil + DLP + sanciones en reglamento.',p:'media'},
+  {t:'Falla del agente de turnos',m:'Error Workflow avisa a IT. Recepción retoma el chat manual.',p:'baja'},
+  {t:'Incumplimiento de la Ley 25.326',m:'DPA firmado, inscripción AAIP, MFA y DLP activos.',p:'baja'}
+];
+document.getElementById('riskList').innerHTML=risks.map(r=>`
+  <div class="risk">
+    <div><div class="rt">${r.t}</div><div class="rm">${r.m}</div></div>
+    <span class="prob ${r.p}">${r.p}</span>
+  </div>`).join('');
+
+let impactAnimated=false;
+function animateImpact(){
+  if(impactAnimated) return; impactAnimated=true;
+  setTimeout(()=>{
+    document.querySelectorAll('.bar2-fill').forEach(f=>f.style.width=f.dataset.w+'%');
+    document.getElementById('recepSeg').style.width='60%';
+  },100);
+}
+</script>
+</body>
+</html>
