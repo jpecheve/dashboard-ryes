@@ -358,12 +358,12 @@ h3.sub{font-family:var(--display);font-weight:600;font-size:17px;margin-bottom:1
     </div>
     <div class="kpi mint">
       <div class="label">Suite ofimática · anual</div>
-      <div class="value">28.944<span class="u">USD</span></div>
+      <div class="value">27.408<span class="u">USD</span></div>
       <div class="foot">Microsoft 365 Business</div>
     </div>
     <div class="kpi accent">
       <div class="label">Ahorro vs Google Workspace</div>
-      <div class="value">2.796<span class="u">USD/año</span></div>
+      <div class="value">2.484<span class="u">USD/año</span></div>
       <div class="foot accent">Mejor seguridad, <b>menor costo</b></div>
     </div>
     <div class="kpi">
@@ -388,8 +388,8 @@ h3.sub{font-family:var(--display);font-weight:600;font-size:17px;margin-bottom:1
     <h3>Adoptar Microsoft 365 Business + agente de turnos en n8n con Claude API, asignando licencias por perfil según sensibilidad del dato.</h3>
     <div class="stack">
       <div class="chip">Premium <b>· 27</b></div>
-      <div class="chip">Standard <b>· 120</b></div>
-      <div class="chip">Basic <b>· 53</b></div>
+      <div class="chip">Standard <b>· 128</b></div>
+      <div class="chip">Basic <b>· 15</b></div>
       <div class="chip">Sin licencia <b>· 30</b></div>
       <div class="chip">Agente IA <b>· WhatsApp 24/7</b></div>
     </div>
@@ -428,17 +428,17 @@ h3.sub{font-family:var(--display);font-weight:600;font-size:17px;margin-bottom:1
     <div class="card vs-card win">
       <h4>Microsoft 365 <span class="win-tag">Elegido</span></h4>
       <div class="vs-row"><span>Perfil alto · 27 (Premium)</span><span class="v">USD 7.128</span></div>
-      <div class="vs-row"><span>Perfil medio · 120 (Standard)</span><span class="v">USD 18.000</span></div>
-      <div class="vs-row"><span>Perfil básico · 53 (Basic)</span><span class="v">USD 3.816</span></div>
-      <div class="vs-row"><span><b>Total anual</b></span><span class="vs-total">USD 28.944</span></div>
+      <div class="vs-row"><span>Perfil medio · 128 (Standard)</span><span class="v">USD 19.200</span></div>
+      <div class="vs-row"><span>Perfil básico · 15 (Basic)</span><span class="v">USD 1.080</span></div>
+      <div class="vs-row"><span><b>Total anual</b></span><span class="vs-total">USD 27.408</span></div>
       <div class="vs-row" style="border-top:1px solid var(--line-soft);margin-top:6px;padding-top:12px"><span>Ventaja</span><span class="v" style="color:var(--teal)">Defender + Intune + Entra ID P1</span></div>
     </div>
     <div class="card vs-card">
       <h4>Google Workspace</h4>
       <div class="vs-row"><span>Perfil alto · 27 (Plus)</span><span class="v">USD 7.128</span></div>
-      <div class="vs-row"><span>Perfil medio · 120 (Standard)</span><span class="v">USD 20.160</span></div>
-      <div class="vs-row"><span>Perfil básico · 53 (Starter)</span><span class="v">USD 4.452</span></div>
-      <div class="vs-row"><span><b>Total anual</b></span><span class="vs-total">USD 31.740</span></div>
+      <div class="vs-row"><span>Perfil medio · 128 (Standard)</span><span class="v">USD 21.504</span></div>
+      <div class="vs-row"><span>Perfil básico · 15 (Starter)</span><span class="v">USD 1.260</span></div>
+      <div class="vs-row"><span><b>Total anual</b></span><span class="vs-total">USD 29.892</span></div>
       <div class="vs-row" style="border-top:1px solid var(--line-soft);margin-top:6px;padding-top:12px"><span>Ventaja</span><span class="v">Gemini incluido · colaboración nativa</span></div>
     </div>
   </div>
@@ -484,7 +484,7 @@ h3.sub{font-family:var(--display);font-weight:600;font-size:17px;margin-bottom:1
   <div class="section-head">
     <div class="eyebrow">Hoja de ruta · 12 semanas + optimización</div>
     <h2>Implementación por fases</h2>
-    <p>Tocá cada fase para ver las actividades clave. El orden importa: contratar M365 antes de julio 2026 fija el precio actual y ahorra ~USD 4.452 el primer año.</p>
+    <p>Tocá cada fase para ver las actividades clave. El orden importa: contratar M365 antes de julio 2026 fija el precio actual y ahorra ~USD 3.456 el primer año.</p>
   </div>
   <div class="timeline" id="timeline"></div>
 </section>
@@ -527,7 +527,7 @@ h3.sub{font-family:var(--display);font-weight:600;font-size:17px;margin-bottom:1
       <div class="chart-title">Estructura de costos · primer año</div>
       <div class="chart-sub">Recurrente anual vs inversión única</div>
       <div class="bar2" id="costStruct"></div>
-      <div class="note">El hardware (~USD 180.000) es una inversión única con vida útil de 4–5 años, no un gasto que se repite. El costo recurrente real es ~USD 29.340/año (suite + agente).</div>
+      <div class="note">El hardware (~USD 180.000) es una inversión única con vida útil de 4–5 años, no un gasto que se repite. El costo recurrente real es ~USD 27.804/año (suite + agente).</div>
     </div>
   </div>
 
@@ -599,14 +599,14 @@ diagToggle.addEventListener('click',e=>{
 /* ---------- LICENCIAS ---------- */
 const licData=[
   {name:'Business Premium',sub:'27 usuarios · datos sensibles',n:27,cost:'USD 7.128',color:'var(--ink)'},
-  {name:'Business Standard',sub:'120 usuarios · profesionales y recepción',n:120,cost:'USD 18.000',color:'var(--teal)'},
-  {name:'Business Basic',sub:'53 usuarios · perfiles operativos',n:53,cost:'USD 3.816',color:'var(--mint)'}
+  {name:'Business Standard',sub:'128 usuarios · marketing, profesionales y recepción',n:128,cost:'USD 19.200',color:'var(--teal)'},
+  {name:'Business Basic',sub:'15 usuarios · logística',n:15,cost:'USD 1.080',color:'var(--mint)'}
 ];
 const licBars=document.getElementById('licBars');
 licBars.innerHTML=licData.map(l=>`
   <div class="lic-row">
     <div class="name">${l.name}<small>${l.sub}</small></div>
-    <div class="lic-track"><div class="lic-fill" data-w="${(l.n/120*100).toFixed(0)}" style="background:${l.color}"><span>${l.n}</span></div></div>
+    <div class="lic-track"><div class="lic-fill" data-w="${(l.n/128*100).toFixed(0)}" style="background:${l.color}"><span>${l.n}</span></div></div>
     <div class="cost">${l.cost}</div>
   </div>`).join('');
 let licAnimated=false;
@@ -680,18 +680,18 @@ tl.addEventListener('click',e=>{
 const costBars=document.getElementById('costBars');
 costBars.innerHTML=`
   <div class="bar2-row">
-    <div class="bl"><span>Microsoft 365 · elegido</span><span class="amt">USD 28.944</span></div>
-    <div class="bar2-track"><div class="bar2-fill" data-w="91" style="background:var(--teal)"></div></div>
+    <div class="bl"><span>Microsoft 365 · elegido</span><span class="amt">USD 27.408</span></div>
+    <div class="bar2-track"><div class="bar2-fill" data-w="92" style="background:var(--teal)"></div></div>
   </div>
   <div class="bar2-row">
-    <div class="bl"><span>Google Workspace</span><span class="amt">USD 31.740</span></div>
+    <div class="bl"><span>Google Workspace</span><span class="amt">USD 29.892</span></div>
     <div class="bar2-track"><div class="bar2-fill" data-w="100" style="background:var(--coral)"></div></div>
   </div>`;
 
 const costStruct=document.getElementById('costStruct');
 costStruct.innerHTML=`
   <div class="bar2-row">
-    <div class="bl"><span>Recurrente anual · suite + agente</span><span class="amt">~USD 29.340</span></div>
+    <div class="bl"><span>Recurrente anual · suite + agente</span><span class="amt">~USD 27.804</span></div>
     <div class="bar2-track"><div class="bar2-fill" data-w="16" style="background:var(--mint)"></div></div>
   </div>
   <div class="bar2-row">
@@ -731,7 +731,7 @@ dl.innerHTML=areas.map(a=>`<div class="li"><span class="sw" style="background:${
 /* RIESGOS */
 const risks=[
   {t:'Resistencia al cambio del personal',m:'Capacitación obligatoria + soporte intensivo 30 días.',p:'alta'},
-  {t:'Aumento de precios M365 (julio 2026)',m:'Contratar el plan anual antes de esa fecha. Ahorro ~USD 4.452.',p:'alta'},
+  {t:'Aumento de precios M365 (julio 2026)',m:'Contratar el plan anual antes de esa fecha. Ahorro ~USD 3.456.',p:'alta'},
   {t:'Corte de internet en una sede',m:'Módem 4G/5G de backup. El agente sigue operando desde n8n Cloud.',p:'media'},
   {t:'Fuga de datos por IA externa',m:'Política de IA por perfil + DLP + sanciones en reglamento.',p:'media'},
   {t:'Falla del agente de turnos',m:'Error Workflow avisa a IT. Recepción retoma el chat manual.',p:'baja'},
